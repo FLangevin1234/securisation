@@ -43,7 +43,10 @@ class RSAService
         $privateKey = openssl_pkey_get_private(file_get_contents($this->privateKeyPath));
 
         openssl_public_encrypt($phraseInutile, $chiffre, $publicKey);
-        return($chiffre);
+
+        $encrypted = base64_encode($chiffre);
+
+        return($encrypted);
 
     }
     public function dechiffrer($chiffre)
@@ -52,7 +55,7 @@ class RSAService
         $publicKey  = openssl_pkey_get_public(file_get_contents($this->publicKeyPath));
         $privateKey = openssl_pkey_get_private(file_get_contents($this->privateKeyPath));
 
-        openssl_private_decrypt($chiffre, $dechiffre, $privateKey);
+        openssl_private_decrypt(base64_decode($chiffre), $dechiffre, $privateKey);
         return($dechiffre);
     }
 }

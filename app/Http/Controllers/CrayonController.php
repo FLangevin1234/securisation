@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Crayon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class CrayonController extends Controller
 {
@@ -60,18 +61,28 @@ class CrayonController extends Controller
     // Mettre à jour les informations du crayon dans la base de données
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nom' => 'required',
-            'quantite' => 'required|integer|min:0',
-        ]);
+        try {
+            session_start();
+        }
+        catch (\Exception){}
+        if($_SESSION['login'] == 'true'){
+            $request->validate([
+                'nom' => 'required',
+                'quantite' => 'required|integer|min:0',
+            ]);
 
-        $crayon = Crayon::findOrFail($id);
-        $crayon->update([
-            'nom' => $request->input('nom'),
-            'quantite' => $request->input('quantite'),
-        ]);
+            $crayon = Crayon::findOrFail($id);
+            $crayon->update([
+                'nom' => $request->input('nom'),
+                'quantite' => $request->input('quantite'),
+            ]);
 
-        return redirect('/crayons')->with('success', 'Crayon mis à jour avec succès');
+            return redirect('/crayons')->with('success', 'Crayon mis à jour avec succès');
+        }
+        else{
+            return redirect('/');
+        }
+
     }
 
     // Supprimer un crayon de la base de données
@@ -94,7 +105,7 @@ class CrayonController extends Controller
 
     public function search(Request $request){
         $crayons = DB::table('crayons')
-            ->where('nom', 'like', DB::raw('"%' . $request->texte . '%"'))
+            ->where('nom', 'like', $request->texte)
             ->get();
         return view('crayons.index', compact('crayons'));
     }

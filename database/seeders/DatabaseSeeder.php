@@ -24,17 +24,17 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Alice',
             'email' => 'alice@email.com',
-            'password' => 'Password1'
+            'password' => hash('sha512', 'B3$stP@$$w0rd1'),
         ]);
         \App\Models\User::factory()->create([
             'name' => 'Bob',
             'email' => 'bob@example.com',
-            'password' => 'Superman'
+            'password' => hash('sha512', 'SUuUuUp3rM@n')
         ]);
         \App\Models\User::factory()->create([
             'name' => 'Gordon',
             'email' => 'gb@mail.com',
-            'password' => '123456'
+            'password' => hash('sha512', '0n3Tw0ThRe3F0UrF1V3')
         ]);
     }
 }

@@ -28,8 +28,8 @@
         <tbody>
         @foreach($crayons as $crayon)
             <tr>
-                <td>{!! $crayon->nom !!}</td>
-                <td>{!! $crayon->quantite !!}</td>
+                <td>{{$crayon->nom}}</td>
+                <td>{{$crayon->quantite}}</td>
                 <td>
                     <a href="{{ route('crayons.edit', $crayon->id) }}">Modifier</a>
                     <form action="{{ route('crayons.destroy', $crayon->id) }}" method="POST">

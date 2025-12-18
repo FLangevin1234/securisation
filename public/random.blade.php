@@ -2,5 +2,6 @@
 
 $crayon = \App\Models\Crayon::inRandomOrder()->first();
 
-echo "<p> $crayon->nom</p>";
-echo "<p> Quantité : $crayon->quantite</p>";
+echo(htmlspecialchars("$crayon->nom"));
+echo(htmlspecialchars("Quantité : $crayon->quantite"));
+

@@ -14,7 +14,7 @@ class SessionController extends Controller
     {
         if(DB::table('users')
             ->where('email', '=', $request->input('email'))
-            ->where('password', '=', $request->input('password'))
+            ->where('password', '=', hash('sha256', $request->input('password')))
             ->first() != null){
             try {
                 session_start();
@@ -34,7 +34,7 @@ class SessionController extends Controller
        User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'password' => $request->input('password')
+            'password' => hash('sha256', $request->input('password'))
         ]);
 
         return redirect('/login');

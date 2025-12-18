@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CrayonController;
+use App\Http\Controllers\RSAController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [CrayonController::class, 'index'])->name('index');
 
 Route::get('/crayons', [CrayonController::class, 'index'])->name('crayons.index');
+Route::get('/rsa', [RSAController::class, 'index'])->name('rsa');
 Route::get('/crayons/create', [CrayonController::class, 'create'])->name('crayons.create');
 Route::post('/crayons', [CrayonController::class, 'store'])->name('crayons.store');
 Route::get('/crayons/{id}/edit', [CrayonController::class, 'edit'])->name('crayons.edit');
